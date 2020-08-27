@@ -41,7 +41,7 @@ document.getElementById('btnRetry').addEventListener('click', function () {
     alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
     gameRun = true;
     orderNumberField.innerText = orderNumber;
-    answerField.innerText = `Вы загадали число ${answerNumber }?`;
+    answerField.innerText = `Вы загадали число ${getNumerInText(answerNumber)}?`;
 })
 
 document.getElementById('btnOver').addEventListener('click', function () {
@@ -54,8 +54,6 @@ document.getElementById('btnOver').addEventListener('click', function () {
             answerNumber  = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-
-            //answerField.innerText = getAnAnswerOnSuccess() + answerNumber;
             answerField.innerText = getAnAnswerOnSuccess() + getNumerInText(answerNumber);
         }
     }
@@ -63,18 +61,14 @@ document.getElementById('btnOver').addEventListener('click', function () {
 
 document.getElementById('btnLess').addEventListener('click', function () {
     if (gameRun){
-        
-        let phraseRandom;
-        if (minValue === maxValue){
+        if (minValue === maxValue - 1){
             answerField.innerText = getAnAnswerOnFailed();
             gameRun = false;
         } else {
             maxValue = answerNumber - 1;
-            answerNumber  = Math.floor((minValue + maxValue) / 2);
+            answerNumber  = Math.floor((minValue + maxValue) / 2);            
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-
-            //answerField.innerText = getAnAnswerOnSuccess() + answerNumber;
             answerField.innerText = getAnAnswerOnSuccess() + getNumerInText(answerNumber);
         }
     }
@@ -135,9 +129,10 @@ document.getElementById('btnEqual').addEventListener('click', function () {
     }
 })
 
-function getNumerInText(number) {
+function getNumerInText(num) {
     
     let result = '';
+    let number = num;
 
     if (number == 0) {
         result = 0;
@@ -171,14 +166,21 @@ function getNumerInText(number) {
         else {
             let x = number % 100;
             result += arr[3][(number - (number % 100))/100];
-            if (x % 10 == 0) {
-                result += ' ' + arr[2][x/10]
+
+            if (countDigits(x) == 1)
+            {
+                result += ' ' + arr[0][x];
             }
-            else if ((x - (x % 10))/10 == 1) {
-                result += ' ' + arr[1][x];
-            }
-            else{
-                result += ' ' + arr[2][(x - (x % 10))/10] + ' ' + arr[0][x%10]; 
+            else {
+                if (x % 10 == 0) {
+                    result += ' ' + arr[2][x/10]
+                }
+                else if ((x - (x % 10))/10 == 1) {
+                    result += ' ' + arr[1][(x % 10)-1];
+                }
+                else{
+                    result += ' ' + arr[2][(x - (x % 10))/10] + ' ' + arr[0][x%10]; 
+                }
             }
         }
     }
