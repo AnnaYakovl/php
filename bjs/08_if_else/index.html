@@ -9,34 +9,100 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 <body>
-<div class="container">
-    <div class="row game-card align-items-center">
-        <div class="col col-md-4 offset-md-4">
-            <div class="card text-center">
-                <div class="card-header">
-                    <p class="m-0">Вопрос №<span id="orderNumberField">5</span></p>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Ввод данных
+              </button>
+            </h2>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <p><b>Минимальное значение числа для игры:</b><br>
+                <input id="minValue" type="text"> 
+                <p><b>Максимальное значение числа для игры:</b><br>
+                <input id="maxValue" type="text">
+                <div>
+                    <button id="btnSend">Отправить</button>
                 </div>
-                <div class="card-body">
-                    <div class="row no-gutters">
-                        <div class="col">
-                            <h3 class="card-title m-0"><span id="answerField">Вы загадали число 5?</span></h3>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                Уведомление
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse hide" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+               <p> Загадайте любое целое число от <output id="min"></output> до <output id="max"></output> а я его угадаю </p>
+               <div>
+                <button id="btnOk">Оk</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                Угадайка
+              </button>
+            </h2>
+          </div>
+          <div id="collapseThree" class="collapse hide" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row game-card align-items-center">
+                        <div class="col col-md-4 offset-md-4">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <p class="m-0">Вопрос №<span id="orderNumberField">5</span></p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row no-gutters">
+                                        <div class="col">
+                                            <h3 class="card-title m-0"><span id="answerField">Вы загадали число 5?</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="btn-group">
+                                        <button class="btn btn-info" id="btnLess">&#129047;<br>меньше</button>
+                                        <button class="btn btn-success btn-lg" id="btnEqual">Верно!</button>
+                                        <button class="btn btn-info" id="btnOver">больше<br>&#129045;</button>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-link" id="btnRetry">Заново</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="btn-group">
-                        <button class="btn btn-info" id="btnLess">&#129047;<br>меньше</button>
-                        <button class="btn btn-success btn-lg" id="btnEqual">Верно!</button>
-                        <button class="btn btn-info" id="btnOver">больше<br>&#129045;</button>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-link" id="btnRetry">Заново</button>
-                </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
-<script src="script.js"></script>
+      </div>
+
+
+
+
+
+
+<script src="script.js">
+
+    $(document).ready(function(){
+        $(".panel-title").click(function(){
+            $("#collapseTwo").collapse('toggle');
+        });
+    });
+    </script>
 </body>
 </html>

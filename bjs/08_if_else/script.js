@@ -1,17 +1,16 @@
-let minUserValue = parseInt(prompt('Минимальное знание числа для игры','0'));
-let maxUserValue = parseInt(prompt('Максимальное знание числа для игры','100'));
+let minValue = 0;
+let maxValue = 100;
+let minUserValue = 0;
+let maxUserValue = 100;
 const minDefaultValue = 0;
 const maxDefaultValue = 100;
 const maxLimitValue = 999;
 const minLimitValue = -999;
-
-minUserValue = (minUserValue < minLimitValue) ? minLimitValue : minUserValue;
-maxUserValue = (maxUserValue > maxLimitValue) ? maxLimitValue : maxUserValue;
-
-let minValue = minUserValue || minDefaultValue;
-let maxValue = maxUserValue || maxDefaultValue;
-
-alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
+let gameRun = false;
+let answerNumber  = Math.floor((minValue + maxValue) / 2);
+let orderNumber = 1;
+const orderNumberField = document.getElementById('orderNumberField');
+const answerField = document.getElementById('answerField');
 
 var arr = [
     [,"один", "два", "три", "четыре", "пять", "шесть","семь", "восемь", "девять", "десять"],
@@ -20,28 +19,33 @@ var arr = [
     [,"сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот","семьсот", "восемьсот", "девятьсот"]
 ];
 
-let answerNumber  = Math.floor((minValue + maxValue) / 2);
-
-let orderNumber = 1;
-let gameRun = true;
-
-const orderNumberField = document.getElementById('orderNumberField');
-const answerField = document.getElementById('answerField');
-
-orderNumberField.innerText = orderNumber;
-answerField.innerText = `Вы загадали число ${getNumerInText(answerNumber)}?`;
-
-document.getElementById('btnRetry').addEventListener('click', function () {
-    minValue = 0;
-    maxValue = 100;
+function prepareValue()
+{
     orderNumber = 0;
-    answerNumber  = Math.floor((minValue + maxValue) / 2);
-    prompt('Минимальное знание числа для игры','0');
-    prompt('Максимальное знание числа для игры','100');
-    alert(`Загадайте любое целое число от ${minValue} до ${maxValue}, а я его угадаю`);
-    gameRun = true;
     orderNumberField.innerText = orderNumber;
+    maxUserValue  = parseInt(document.getElementById('maxValue').value);
+    minUserValue  = parseInt(document.getElementById('minValue').value);
+    minUserValue = (minUserValue < minLimitValue) ? minLimitValue : minUserValue;
+    minUserValue = (minUserValue > maxLimitValue) ? minLimitValue : minUserValue;
+    maxUserValue = (maxUserValue > maxLimitValue) ? maxLimitValue : maxUserValue;
+    maxUserValue = (maxUserValue < minLimitValue) ? maxLimitValue : maxUserValue;
+
+    minValue = minUserValue || minDefaultValue;
+    maxValue = maxUserValue || maxDefaultValue;
+
+    document.getElementById("min").innerHTML = minValue;
+    document.getElementById("max").innerHTML = maxValue;
+
+    answerNumber  = Math.floor((minValue + maxValue) / 2); 
     answerField.innerText = `Вы загадали число ${getNumerInText(answerNumber)}?`;
+}
+
+document.getElementById('btnRetry').addEventListener('click', function () {  
+    document.getElementById('minValue').value = '';
+    document.getElementById('maxValue').value = ''; 
+    
+    document.getElementById('collapseThree').setAttribute('class','collapse hide');
+    document.getElementById('collapseOne').setAttribute('class','collapse show');   
 })
 
 document.getElementById('btnOver').addEventListener('click', function () {
@@ -59,14 +63,29 @@ document.getElementById('btnOver').addEventListener('click', function () {
     }
 })
 
+document.getElementById('btnSend').addEventListener('click', function () {
+
+    prepareValue();
+    document.getElementById('collapseOne').setAttribute('class','collapse hide');
+    document.getElementById('collapseTwo').setAttribute('class','collapse show');
+    
+})
+
+document.getElementById('btnOk').addEventListener('click', function () {
+
+    document.getElementById('collapseTwo').setAttribute('class','collapse hide');
+    document.getElementById('collapseThree').setAttribute('class','collapse show');
+    gameRun = true;
+})
+
 document.getElementById('btnLess').addEventListener('click', function () {
     if (gameRun){
-        if (minValue === maxValue - 1){
-            answerField.innerText = getAnAnswerOnFailed();
+        if (minValue === maxValue){
+            answerField.innerText = getAnAnswerOnFailed() ;
             gameRun = false;
         } else {
-            maxValue = answerNumber - 1;
-            answerNumber  = Math.floor((minValue + maxValue) / 2);            
+            answerNumber  = Math.floor((maxValue + minValue) / 2);
+            maxValue = answerNumber;
             orderNumber++;
             orderNumberField.innerText = orderNumber;
             answerField.innerText = getAnAnswerOnSuccess() + getNumerInText(answerNumber);
