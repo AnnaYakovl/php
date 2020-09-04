@@ -1,0 +1,23 @@
+.m-0 {
+    font-family: 'Open Sans', monospace;
+    color: #189162;
+}
+.card-body {
+    font-family: 'Open Sans', monospace;
+    color: #104732;
+}
+.btn {
+  display: inline-block;
+  color: rgb(24, 90, 68);
+  font-weight: 700;
+  text-decoration: none;
+  user-select: none;
+  padding: .5em 2em;
+  outline: none;
+  border: 2px solid;
+  border-radius: 1px;
+  transition: 0.2s;
+}
+.card {
+    background-color: rgb(162, 231, 173);
+}
